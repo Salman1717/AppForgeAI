@@ -8,5 +8,5 @@
 import Foundation
 
 protocol AIServiceProtocol{
-    
+    func generateBlueprint(from idea: String) async throws ->  String
 }

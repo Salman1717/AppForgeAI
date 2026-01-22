@@ -8,5 +8,10 @@
 import Foundation
 
 protocol AuthServiceProtocol{
+    var isAuthenticated:Bool { get }
+    
+    func signIn() async throws
+    
+    func signOut() throws
     
 }
