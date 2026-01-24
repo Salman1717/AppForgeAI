@@ -7,9 +7,15 @@
 
 import Foundation
 
-struct Blueprint{
+struct Blueprint : Identifiable, Codable {
+    
     let id: String
     let title: String
     let rawIdea: String
+    
+    let product: ProductSpec
+    let technical: TechnicalSpec
+    let financial: FinancialSpec
+    
     let createdAt: Date
 }

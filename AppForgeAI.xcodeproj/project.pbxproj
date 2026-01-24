@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		623D90F42F24DBC000B22D77 /* FirebaseAILogic in Frameworks */ = {isa = PBXBuildFile; productRef = 623D90F32F24DBC000B22D77 /* FirebaseAILogic */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		62D417202F229AFB004079AE /* AppForgeAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppForgeAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				623D90F42F24DBC000B22D77 /* FirebaseAILogic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = AppForgeAI;
 			packageProductDependencies = (
+				623D90F32F24DBC000B22D77 /* FirebaseAILogic */,
 			);
 			productName = AppForgeAI;
 			productReference = 62D417202F229AFB004079AE /* AppForgeAI.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = 62D417172F229AFB004079AE;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				623D90F22F24DBC000B22D77 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 62D417212F229AFB004079AE /* Products */;
 			projectDirPath = "";
@@ -332,6 +341,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		623D90F22F24DBC000B22D77 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.8.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		623D90F32F24DBC000B22D77 /* FirebaseAILogic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 623D90F22F24DBC000B22D77 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAILogic;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 62D417182F229AFB004079AE /* Project object */;
 }
