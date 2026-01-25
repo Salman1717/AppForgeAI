@@ -38,21 +38,17 @@ struct HomeView: View {
                 .buttonStyle(.borderedProminent)
                 
                 
-                if let blueprint = viewModel.generatedBlueprint {
-                    
-                    
-                    Text("✅ Generated:")
-                        .font(.headline)
-                    
-                    
-                    Text(blueprint.product.problemStatement)
-                        .font(.subheadline)
-                }
+                
                 Spacer()
                 
             }
             .padding()
             .navigationTitle("AppForge AI")
+            .navigationDestination(isPresented: .constant(viewModel.generatedBlueprint != nil)){
+                if let blueprint = viewModel.generatedBlueprint{
+                    BlueprintView(blueprint: blueprint)
+                }
+            }
         }
     }
 }

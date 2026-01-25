@@ -11,7 +11,7 @@ enum GeminiPromptBuilder{
     
     static func build(for idea:String) -> String{
         """
-        You are an expert product architect and iOS engineer.
+        You are an expert product architect and Product Idea  maker.
         
         
         Convert the following app idea into a structured JSON blueprint.
@@ -24,6 +24,10 @@ enum GeminiPromptBuilder{
         
         
         {
+        "meta": {
+        "productName": "",
+        "tagline": ""
+        },
         "product": {
         "problemStatement": "",
         "targetAudience": "",

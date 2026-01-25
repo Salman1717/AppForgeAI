@@ -23,6 +23,7 @@ enum BlueprintDecoder{
         
         
         struct rawBlueprint: Codable{
+            let meta: Meta
             let product: ProductSpec
             let technical: TechnicalSpec
             let financial: FinancialSpec
@@ -31,13 +32,20 @@ enum BlueprintDecoder{
         let raw = try JSONDecoder().decode(rawBlueprint.self, from: data)
         
         return Blueprint(
-            id: UUID().uuidString,
-            title: raw.product.uniqueValueProposition,
-            rawIdea: idea,
-            product: raw.product,
-            technical: raw.technical,
-            financial: raw.financial,
-            createdAt: Date()
+        id: UUID().uuidString,
+
+
+        title: raw.meta.productName,
+        description: raw.meta.tagline,
+
+
+        rawIdea: idea,
+
+
+        product: raw.product,
+        technical: raw.technical,
+        financial: raw.financial,
+        createdAt: Date()
         )
     }
     

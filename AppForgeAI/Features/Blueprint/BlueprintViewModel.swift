@@ -11,9 +11,36 @@ import Combine
 @MainActor
 final class BlueprintViewModel: ObservableObject{
     
-    private let blueprintService: BlueprintRepositoryProtocol
+     let blueprint: Blueprint
     
-    init(blueprintService: BlueprintRepositoryProtocol) {
-        self.blueprintService = blueprintService
+    init(blueprint: Blueprint) {
+        self.blueprint = blueprint
+    }
+    
+    func copyProductSummary(){
+        let text = """
+            
+            \(blueprint.product.uniqueValueProposition)
+            
+            Problem:
+            \(blueprint.product.problemStatement)
+            
+            MVP:
+            \(blueprint.product.mvpFeatures.joined(separator: ","))
+            
+            """
+        
+        ClipboardManager.copy(text)
+    }
+    
+    func copyDatabaseSchema(){
+        guard
+            let data = try?JSONEncoder().encode(blueprint.technical.databaseSchema),
+            let text = String(data:data, encoding: .utf8)
+        else{
+            return
+        }
+        
+        ClipboardManager.copy(text)
     }
 }
