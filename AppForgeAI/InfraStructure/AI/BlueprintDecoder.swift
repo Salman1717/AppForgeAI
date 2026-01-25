@@ -11,15 +11,15 @@ enum BlueprintDecoder{
     
     static func decode(json: String, idea: String) throws -> Blueprint{
         
-        let cleaned = json
-        .replacingOccurrences(of: "```json", with: "")
-        .replacingOccurrences(of: "```", with: "")
-        .trimmingCharacters(in: .whitespacesAndNewlines)
+        let cleaned =  clean(json)
         
-        guard let data = cleaned.data(using: .utf8) else{
+        guard JSONValidator.isValidJSON(cleaned) else {
             throw GeminiError.decodingFailed
         }
         
+        guard let data = cleaned.data(using: .utf8) else {
+            throw GeminiError.decodingFailed
+        }
         
         
         struct rawBlueprint: Codable{
@@ -41,4 +41,16 @@ enum BlueprintDecoder{
         )
     }
     
+    private static func clean(_ text: String) -> String{
+        var cleaned = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        
+        cleaned = cleaned
+            .replacingOccurrences(of: "```json", with: "")
+            .replacingOccurrences(of: "``` json", with: "")
+            .replacingOccurrences(of: "```", with: "")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        return cleaned
+    }
 }

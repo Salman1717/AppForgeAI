@@ -23,20 +23,43 @@ final class IdeaInputViewModel:ObservableObject{
     }
     
     func generateBlueprint() async{
+        
         isLoading = true
         error = nil
         
-        do{
-            let json = try await aiService.generateBlueprint(from: ideaText)
+        let maxRetries = 2
+        var attempt = 0
+        
+        while attempt <= maxRetries{
             
-            let blueprint = try BlueprintDecoder.decode(json: json, idea: ideaText)
-            
-            self.generatedBlueprint = blueprint
-        }catch{
-            self.error = error.localizedDescription
+            do{
+                let json = try await aiService.generateBlueprint(from: ideaText)
+                
+                let blueprint = try BlueprintDecoder.decode(json: json, idea: ideaText)
+                
+                self.generatedBlueprint = blueprint
+                
+                isLoading = false
+                
+                return
+                
+            }catch{
+                
+                attempt += 1
+                isLoading = false
+                
+                self.error = error.localizedDescription
+                
+                if attempt > maxRetries{
+                    self.error = GeminiError.maxRetriesReached.localizedDescription
+                    isLoading = false
+                    return
+                }
+                
+                try? await Task.sleep(nanoseconds: 700_000_000)
+            }
         }
         
-        isLoading = false
     }
-
+    
 }

@@ -11,6 +11,7 @@ enum GeminiError: LocalizedError{
     case invalidInput
     case emptyResponse
     case decodingFailed
+    case maxRetriesReached
     
     var errorDescription: String?{
         switch self{
@@ -20,6 +21,8 @@ enum GeminiError: LocalizedError{
             return "No Response from AI"
         case .decodingFailed:
             return "Invalid AI Response Format"
+        case .maxRetriesReached:
+            return "AI failed to return valid data. Please Try Again later."
         }
     }
 }
