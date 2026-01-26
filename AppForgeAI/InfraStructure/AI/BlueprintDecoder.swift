@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseAuth
 
 enum BlueprintDecoder{
     
@@ -21,6 +22,9 @@ enum BlueprintDecoder{
             throw GeminiError.decodingFailed
         }
         
+        guard let uid = Auth.auth().currentUser?.uid else {
+            throw AuthError.unknown
+        }
         
         struct rawBlueprint: Codable{
             let meta: Meta
@@ -32,20 +36,21 @@ enum BlueprintDecoder{
         let raw = try JSONDecoder().decode(rawBlueprint.self, from: data)
         
         return Blueprint(
-        id: UUID().uuidString,
-
-
-        title: raw.meta.productName,
-        description: raw.meta.tagline,
-
-
-        rawIdea: idea,
-
-
-        product: raw.product,
-        technical: raw.technical,
-        financial: raw.financial,
-        createdAt: Date()
+            id: UUID().uuidString,
+            ownerId: uid,
+            
+            
+            title: raw.meta.productName,
+            description: raw.meta.tagline,
+            
+            
+            rawIdea: idea,
+            
+            
+            product: raw.product,
+            technical: raw.technical,
+            financial: raw.financial,
+            createdAt: Date()
         )
     }
     

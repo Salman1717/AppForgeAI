@@ -30,7 +30,7 @@ struct AppRootView: View {
                 
                 HomeView(
                     viewModel: IdeaInputViewModel(
-                        aiService: container.aiService,
+                        aiService: container.aiService, blueprintRepo: container.blueprintRepo,
                     ), authViewModel: authVM
                 )
                 

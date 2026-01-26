@@ -17,9 +17,14 @@ final class IdeaInputViewModel:ObservableObject{
     @Published var generatedBlueprint: Blueprint?
     
     private let aiService: AIServiceProtocol
+    private let blueprintRepo: BlueprintRepositoryProtocol
     
-    init(aiService: AIServiceProtocol){
+    init(
+        aiService: AIServiceProtocol,
+        blueprintRepo: BlueprintRepositoryProtocol
+    ){
         self.aiService = aiService
+        self.blueprintRepo = blueprintRepo
     }
     
     func generateBlueprint() async{
@@ -37,6 +42,8 @@ final class IdeaInputViewModel:ObservableObject{
                 
                 let blueprint = try BlueprintDecoder.decode(json: json, idea: ideaText)
                 
+                try await blueprintRepo.save(blueprint)
+
                 self.generatedBlueprint = blueprint
                 
                 isLoading = false

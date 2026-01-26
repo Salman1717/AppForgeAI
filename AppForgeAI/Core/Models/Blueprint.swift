@@ -10,8 +10,11 @@ import Foundation
 struct Blueprint : Identifiable, Codable {
     
     let id: String
+    let ownerId: String
+    
     let title: String
     let description: String
+    
     let rawIdea: String
     
     let product: ProductSpec

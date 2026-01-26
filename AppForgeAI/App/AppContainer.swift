@@ -11,11 +11,13 @@ final class AppContainer{
     
     
     let aiService: AIServiceProtocol
-    
+    let blueprintRepo: BlueprintRepositoryProtocol
     
     init(
-        aiService: AIServiceProtocol = GeminiAIService()
+        aiService: AIServiceProtocol = GeminiAIService(),
+        blueprintRepo: BlueprintRepositoryProtocol = FirestoreBlueprintRepository()
     ){
-        self.aiService = aiService  
+        self.aiService = aiService
+        self.blueprintRepo = blueprintRepo
     }
 }

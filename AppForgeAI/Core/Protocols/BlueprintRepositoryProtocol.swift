@@ -9,7 +9,7 @@ import Foundation
 
 protocol BlueprintRepositoryProtocol {
     
-    func saveBlueprint(_ blueprint: Blueprint) async throws
+    func save(_ blueprint: Blueprint) async throws
     
     func fetchAll() async throws -> [Blueprint]
     
