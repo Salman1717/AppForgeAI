@@ -8,10 +8,15 @@
 import Foundation
 
 protocol AuthServiceProtocol{
-    var isAuthenticated:Bool { get }
     
-    func signIn() async throws
+    func signInWithGoogle() async throws
+    
+    func signInWithEmail(email: String, password: String) async throws
+    
+    func signUpWithEmail(email: String, password: String) async throws
     
     func signOut() throws
+    
+    var currentUserId: String? { get }
     
 }

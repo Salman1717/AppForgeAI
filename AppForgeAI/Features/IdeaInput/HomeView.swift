@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
     
     @StateObject var viewModel: IdeaInputViewModel
+    @ObservedObject var authViewModel: AuthViewModel
     
     var body: some View {
         NavigationStack{
@@ -35,6 +36,8 @@ struct HomeView: View {
                     }
                 }
                 
+                
+                
                 .buttonStyle(.borderedProminent)
                 
                 
@@ -47,6 +50,16 @@ struct HomeView: View {
             .navigationDestination(isPresented: .constant(viewModel.generatedBlueprint != nil)){
                 if let blueprint = viewModel.generatedBlueprint{
                     BlueprintView(blueprint: blueprint)
+                }
+            }
+            .toolbar {
+
+                ToolbarItem(placement: .navigationBarTrailing) {
+
+                    Button("Logout") {
+                        authViewModel.signOut()
+                    }
+                    .foregroundColor(.red)
                 }
             }
         }

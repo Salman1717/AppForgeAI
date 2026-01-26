@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		623D90F42F24DBC000B22D77 /* FirebaseAILogic in Frameworks */ = {isa = PBXBuildFile; productRef = 623D90F32F24DBC000B22D77 /* FirebaseAILogic */; };
+		62E9393D2F265A6200798FDE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 62E9393C2F265A6200798FDE /* FirebaseAuth */; };
+		62E9393F2F265A6200798FDE /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 62E9393E2F265A6200798FDE /* FirebaseCore */; };
+		62E9394B2F265EAB00798FDE /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 62E9394A2F265EAB00798FDE /* GoogleSignIn */; };
+		62E9394D2F265EAB00798FDE /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 62E9394C2F265EAB00798FDE /* GoogleSignInSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,6 +29,16 @@
 		62D417202F229AFB004079AE /* AppForgeAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppForgeAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		62E939432F265C0100798FDE /* Exceptions for "AppForgeAI" folder in "AppForgeAI" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 62D4171F2F229AFB004079AE /* AppForgeAI */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		6240D4382F25252A00DD96E1 /* AppForgeAITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -33,6 +47,9 @@
 		};
 		62D417222F229AFB004079AE /* AppForgeAI */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				62E939432F265C0100798FDE /* Exceptions for "AppForgeAI" folder in "AppForgeAI" target */,
+			);
 			path = AppForgeAI;
 			sourceTree = "<group>";
 		};
@@ -50,7 +67,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62E9394D2F265EAB00798FDE /* GoogleSignInSwift in Frameworks */,
 				623D90F42F24DBC000B22D77 /* FirebaseAILogic in Frameworks */,
+				62E9394B2F265EAB00798FDE /* GoogleSignIn in Frameworks */,
+				62E9393F2F265A6200798FDE /* FirebaseCore in Frameworks */,
+				62E9393D2F265A6200798FDE /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,6 +83,7 @@
 			children = (
 				62D417222F229AFB004079AE /* AppForgeAI */,
 				6240D4382F25252A00DD96E1 /* AppForgeAITests */,
+				62E9393B2F265A6200798FDE /* Frameworks */,
 				62D417212F229AFB004079AE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -73,6 +95,13 @@
 				6240D4372F25252A00DD96E1 /* AppForgeAITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		62E9393B2F265A6200798FDE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,6 +148,10 @@
 			name = AppForgeAI;
 			packageProductDependencies = (
 				623D90F32F24DBC000B22D77 /* FirebaseAILogic */,
+				62E9393C2F265A6200798FDE /* FirebaseAuth */,
+				62E9393E2F265A6200798FDE /* FirebaseCore */,
+				62E9394A2F265EAB00798FDE /* GoogleSignIn */,
+				62E9394C2F265EAB00798FDE /* GoogleSignInSwift */,
 			);
 			productName = AppForgeAI;
 			productReference = 62D417202F229AFB004079AE /* AppForgeAI.app */;
@@ -154,6 +187,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				623D90F22F24DBC000B22D77 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				62E939492F265EAB00798FDE /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 62D417212F229AFB004079AE /* Products */;
@@ -382,6 +416,7 @@
 				DEVELOPMENT_TEAM = 459XAM9CK6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AppForgeAI/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -414,6 +449,7 @@
 				DEVELOPMENT_TEAM = 459XAM9CK6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AppForgeAI/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -477,6 +513,14 @@
 				minimumVersion = 12.8.0;
 			};
 		};
+		62E939492F265EAB00798FDE /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -484,6 +528,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 623D90F22F24DBC000B22D77 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAILogic;
+		};
+		62E9393C2F265A6200798FDE /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 623D90F22F24DBC000B22D77 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		62E9393E2F265A6200798FDE /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 623D90F22F24DBC000B22D77 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		62E9394A2F265EAB00798FDE /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 62E939492F265EAB00798FDE /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		62E9394C2F265EAB00798FDE /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 62E939492F265EAB00798FDE /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

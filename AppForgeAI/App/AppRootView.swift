@@ -7,11 +7,37 @@
 
 import SwiftUI
 
-struct AppRootView: View{
+struct AppRootView: View {
     
     private let container = AppContainer()
     
-    var body: some View{
-        HomeView(viewModel: IdeaInputViewModel(aiService: container.aiService))
+    @StateObject private var authVM: AuthViewModel
+    
+    init() {
+        let authService = FirebaseAuthService()
+        _authVM = StateObject(
+            wrappedValue: AuthViewModel(
+                authService: authService
+            )
+        )
+    }
+    
+    var body: some View {
+        
+        Group {
+            
+            if authVM.isAuthenticated {
+                
+                HomeView(
+                    viewModel: IdeaInputViewModel(
+                        aiService: container.aiService,
+                    ), authViewModel: authVM
+                )
+                
+            } else {
+                
+                LoginView(viewModel: authVM)
+            }
+        }
     }
 }
