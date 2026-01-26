@@ -24,7 +24,7 @@ final class FirebaseAuthService: AuthServiceProtocol{
             throw URLError(.badServerResponse)
         }
         
-        let config = GIDConfiguration(clientID: clientId)
+        _ = GIDConfiguration(clientID: clientId)
         
         let result = try await GIDSignIn.sharedInstance.signIn(
             withPresenting: rootVC
@@ -41,22 +41,38 @@ final class FirebaseAuthService: AuthServiceProtocol{
             accessToken: accessToken
         )
         
-        try await Auth.auth().signIn(with: credentials)
+        do {
+            try await Auth.auth().signIn(with: credentials)
+        } catch {
+            throw AuthErrorMapper.map(error)
+        }
     }
     
     //MARK: - Email
     
     func signInWithEmail(email: String, password: String) async throws {
-        try await Auth.auth().signIn(withEmail: email, password: password)
+        do{
+            try await Auth.auth().signIn(withEmail: email, password: password)
+        }catch{
+            throw AuthErrorMapper.map(error)
+        }
     }
     
     func signUpWithEmail(email: String, password: String) async throws {
-        try await Auth.auth().createUser(withEmail: email, password: password)
+        do{
+            try await Auth.auth().createUser(withEmail: email, password: password)
+        }catch{
+            throw AuthErrorMapper.map(error)
+        }
     }
     
     // MARK: -  Sign Out
     
     func signOut() throws {
-        try Auth.auth().signOut()
+        do{
+            try Auth.auth().signOut()
+        }catch{
+            throw AuthErrorMapper.map(error)
+        }
     }
 }

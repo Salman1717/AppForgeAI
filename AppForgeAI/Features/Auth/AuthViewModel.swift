@@ -22,39 +22,59 @@ final class AuthViewModel: ObservableObject{
         self.isAuthenticated = authService.currentUserId != nil
     }
     
+    // MARK: - Google
     func signInWithGoogle() async throws {
         do{
             try await authService.signInWithGoogle()
             isAuthenticated = true
         }catch{
-            errorMessage = error.localizedDescription
+            if let authError = error as? AuthError {
+                errorMessage = authError.localizedDescription
+            } else {
+                errorMessage = AuthError.unknown.localizedDescription
+            }
         }
     }
     
+    // MARK: - Sign In With Email Pass
     func signInWithEmailPassword(email: String, password: String) async throws {
         do{
             try await authService.signInWithEmail(email: email, password: password)
             isAuthenticated = true
         }catch{
-            errorMessage = error.localizedDescription
+            if let authError = error as? AuthError {
+                errorMessage = authError.localizedDescription
+            } else {
+                errorMessage = AuthError.unknown.localizedDescription
+            }
         }
     }
     
+    //MARK: - Sign Up with Email Pass
     func signUpWithEmailPassword(email: String, password: String) async throws{
         do{
             try await authService.signUpWithEmail(email: email, password: password)
             isAuthenticated = true
         }catch{
-            errorMessage = error.localizedDescription
+            if let authError = error as? AuthError {
+                errorMessage = authError.localizedDescription
+            } else {
+                errorMessage = AuthError.unknown.localizedDescription
+            }
         }
     }
     
+    //MARK: - SignOut
     func signOut() {
         do {
             try authService.signOut()
             isAuthenticated = false
         } catch {
-            errorMessage = error.localizedDescription
+            if let authError = error as? AuthError {
+                errorMessage = authError.localizedDescription
+            } else {
+                errorMessage = AuthError.unknown.localizedDescription
+            }
         }
     }
 }
