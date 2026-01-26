@@ -12,6 +12,10 @@ final class BlueprintDecoderTests: XCTestCase{
     
     private let validJSON = """
     {
+    "meta": {
+      "productName": "",
+      "tagline": ""
+    },
     "product": {
     "problemStatement": "Test problem",
     "targetAudience": "Test users",
