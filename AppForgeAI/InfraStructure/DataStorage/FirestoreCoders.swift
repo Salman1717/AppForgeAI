@@ -15,7 +15,7 @@ enum FirestoreEncoder{
         let json = try JSONSerialization.jsonObject(with: data)
         
         guard let dict = json as? [String: Any] else {
-            throw NSError(domain: "encoding", code: -1)
+            throw FirestoreError.encodingFailed
         }
         
         return dict
@@ -24,8 +24,11 @@ enum FirestoreEncoder{
 
 enum FirestoreDecoder{
     static func decode<T: Codable>(_ type: T.Type, from dict: [String:Any]) throws -> T{
-        let data = try JSONSerialization.data(withJSONObject: dict)
-        
-        return try JSONDecoder().decode(T.self, from: data)
+        do{
+            let data = try JSONSerialization.data(withJSONObject: dict)
+            return try JSONDecoder().decode(T.self, from: data)
+        }catch{
+            throw FirestoreError.decodingFailed
+        }
     }
 }

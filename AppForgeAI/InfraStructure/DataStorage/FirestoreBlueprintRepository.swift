@@ -16,7 +16,7 @@ final class FirestoreBlueprintRepository: BlueprintRepositoryProtocol{
     private func collection() throws -> CollectionReference{
         
         guard let uid = Auth.auth().currentUser?.uid else{
-            throw AuthError.unknown
+            throw FirestoreError.notAuthenticated
         }
         
         return db
@@ -27,32 +27,49 @@ final class FirestoreBlueprintRepository: BlueprintRepositoryProtocol{
     
     //MARK: - Save
     func save(_ blueprint:Blueprint) async throws{
-        
-        let data = try FirestoreEncoder.encode(blueprint)
-        
-        let col = try collection()
-        
-        try await col
-            .document(blueprint.id)
-            .setData(data)
+        do{
+            let data = try FirestoreEncoder.encode(blueprint)
+            
+            let col = try collection()
+            
+            try await col
+                .document(blueprint.id)
+                .setData(data)
+        }catch let error as FirestoreError{
+            throw error
+        }catch{
+            throw FirestoreErrorMapper.map(error)
+        }
     }
     
     //MARK: - Fetch
     func fetchAll() async throws -> [Blueprint] {
-        let col = try collection()
-        
-        let snapshot = try await col
-            .order(by: "createdAt",descending: true)
-            .getDocuments()
-        
-        return try snapshot.documents.map{
-            try FirestoreDecoder.decode(Blueprint.self, from: $0.data())
+        do{
+            let col = try collection()
+            
+            let snapshot = try await col
+                .order(by: "createdAt",descending: true)
+                .getDocuments()
+            
+            return try snapshot.documents.map{
+                try FirestoreDecoder.decode(Blueprint.self, from: $0.data())
+            }
+        }catch let error as FirestoreError{
+            throw error
+        }catch{
+            throw FirestoreErrorMapper.map(error)
         }
     }
     
     //MARK: - Delete
     func delete(id: String) async throws {
-        let col = try collection()
-        try await col.document(id).delete()
+        do{
+            let col = try collection()
+            try await col.document(id).delete()
+        }catch let error as FirestoreError{
+            throw error
+        }catch{
+            throw FirestoreErrorMapper.map(error)
+        }
     }
 }
