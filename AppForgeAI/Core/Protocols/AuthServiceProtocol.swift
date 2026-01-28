@@ -18,5 +18,6 @@ protocol AuthServiceProtocol{
     func signOut() throws
     
     var currentUserId: String? { get }
+    var currentUserName: String? { get }
     
 }

@@ -16,6 +16,10 @@ final class FirebaseAuthService: AuthServiceProtocol{
         Auth.auth().currentUser?.uid
     }
     
+    var currentUserName: String?{
+        Auth.auth().currentUser?.displayName
+    }
+    
     //MARK: - Google Sign In
     func signInWithGoogle() async throws {
         guard let clientId = FirebaseApp.app()?.options.clientID,

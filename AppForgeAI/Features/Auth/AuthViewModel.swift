@@ -16,10 +16,15 @@ final class AuthViewModel: ObservableObject{
     
     private let authService: AuthServiceProtocol
     
+    let userName: String
+    
     init(authService:AuthServiceProtocol){
         self.authService = authService
         
         self.isAuthenticated = authService.currentUserId != nil
+        
+        self.userName = authService.currentUserName ?? "Anonymous"  
+        
     }
     
     // MARK: - Google
