@@ -21,6 +21,14 @@ struct HomeView: View {
                     .padding()
                     .overlay(RoundedRectangle(cornerRadius: 12).stroke())
                 
+                NavigationLink("History") {
+                    
+                    HistoryView(
+                        repo: AppContainer().blueprintRepo
+                    )
+                }
+                .buttonStyle(.bordered)
+                
                 if viewModel.isLoading{
                     ProgressView("Forging")
                 }
@@ -52,10 +60,11 @@ struct HomeView: View {
                     BlueprintView(blueprint: blueprint)
                 }
             }
+            
             .toolbar {
-
+                
                 ToolbarItem(placement: .navigationBarTrailing) {
-
+                    
                     Button("Logout") {
                         authViewModel.signOut()
                     }
