@@ -8,26 +8,55 @@
 import SwiftUI
 
 struct ProductTab: View {
-
+    
     let product: ProductSpec
-
+    
     var body: some View {
-
-        ScrollView {
-
-            VStack(spacing: 16) {
-
-                InfoCard(title: "Problem", text: product.problemStatement)
-
-                InfoCard(title: "Target Users", text: product.targetAudience)
-
-                InfoCard(title: "Value Proposition", text: product.uniqueValueProposition)
-
-                ListCard(title: "MVP Features", items: product.mvpFeatures)
-
-                ListCard(title: "Future Features", items: product.futureFeatures)
+        ZStack{
+            Color(.darkBlue)
+                .ignoresSafeArea()
+            
+            ScrollView {
+                
+                VStack(spacing: 16) {
+                    
+                    InfoCard(
+                        title: "Problem",
+                        text: product.problemStatement,
+                        image:"questionmark.diamond.fill"
+                    )
+                    
+                    InfoCard(
+                        title: "Target Users",
+                        text: product.targetAudience,
+                        image: "person.crop.circle.badge.checkmark"
+                    )
+                    
+                    InfoCard(
+                        title: "Value Proposition",
+                        text: product.uniqueValueProposition,
+                        image:"chart.line.uptrend.xyaxis"
+                    )
+                    
+                    ListCard(
+                        title: "MVP Features",
+                        items: product.mvpFeatures,
+                        image:"key.fill"
+                    )
+                    
+                    ListCard(
+                        title: "Future Features",
+                        items: product.futureFeatures,
+                        image:"sparkles.rectangle.stack"
+                    )
+                }
+                .padding(.vertical)
             }
-            .padding(.vertical)
+            .scrollContentBackground(.hidden)
         }
     }
+}
+
+#Preview {
+    ProductTab(product: ProductSpec.mock)
 }

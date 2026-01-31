@@ -8,64 +8,77 @@
 import SwiftUI
 
 struct BlueprintView: View {
-
+    
     @StateObject private var viewModel: BlueprintViewModel
     @State private var selectedTab = 0
-
+    @Environment(\.dismiss) var dismiss
+    
     init(blueprint: Blueprint) {
         _viewModel = StateObject(
             wrappedValue: BlueprintViewModel(blueprint: blueprint)
         )
     }
-
+    
     var body: some View {
-
-        VStack(spacing: 16) {
-
-            // Header
-            Text(viewModel.blueprint.title)
-                .font(.title2.bold())
-                .multilineTextAlignment(.center)
-
-            // Segmented Control
-            Picker("Section", selection: $selectedTab) {
-                Text("Product").tag(0)
-                Text("Technical").tag(1)
-                Text("Financial").tag(2)
-            }
-            .pickerStyle(.segmented)
-
-            // Content
-            TabView(selection: $selectedTab) {
-
-                ProductTab(product: viewModel.blueprint.product)
-                    .tag(0)
-
-                TechnicalTab(technical: viewModel.blueprint.technical, viewModel: viewModel)
+        ZStack{
+            
+            Color(.darkBlue).ignoresSafeArea()
+            
+            VStack(spacing: 16) {
+                
+                HStack{
+                    Image(systemName: "arrowshape.left.circle.fill")
+                        .font(.system(size: 35, weight: .bold))
+                        .foregroundStyle(.electricBlue)
+                        .onTapGesture{
+                            dismiss()
+                        }
+                    
+                    Spacer()
+                    
+                    Text(viewModel.blueprint.title)
+                        .font(.title2.bold())
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(.white)
+                    
+                    Spacer()
+                    
+                    Image(systemName: "document.on.document")
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundStyle(.electricBlue)
+                        .onTapGesture {
+                            viewModel.copyProductSummary()
+                        }
+                    
+                }
+                
+                CustomSegmentedPicker(
+                    items: ["Product", "Technical", "Financial"],
+                    selectedIndex: $selectedTab
+                )
+                .padding(.horizontal)
+                
+                
+                TabView(selection: $selectedTab) {
+                    
+                    ProductTab(product: viewModel.blueprint.product)
+                        .tag(0)
+                    
+                    TechnicalTab(
+                        technical: viewModel.blueprint.technical,
+                        viewModel: viewModel
+                    )
                     .tag(1)
-
-                FinancialTab(financial: viewModel.blueprint.financial)
-                    .tag(2)
-            }
-            .tabViewStyle(.page(indexDisplayMode: .never))
-
-            // Action Buttons
-            HStack {
-
-                Button("Copy Pitch") {
-                    viewModel.copyProductSummary()
+                    
+                    FinancialTab(financial: viewModel.blueprint.financial)
+                        .tag(2)
                 }
-
-                Spacer()
-
-                Button("Copy Schema") {
-                    viewModel.copyDatabaseSchema()
-                }
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                .animation(.easeInOut, value: selectedTab)
             }
-            .buttonStyle(.borderedProminent)
+            .padding()
+            .navigationBarBackButtonHidden()
         }
-        .padding()
-        .navigationTitle("Blueprint")
     }
 }
 

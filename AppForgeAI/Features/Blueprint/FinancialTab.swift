@@ -12,32 +12,43 @@ struct FinancialTab: View {
     let financial: FinancialSpec
     
     var body: some View {
-        
-        VStack(spacing: 16) {
+        ZStack{
             
-            InfoCard(
-                title: "Estimated Hours",
-                text: "\(financial.estimatedHours) hrs"
-            )
+            Color(.darkBlue).ignoresSafeArea()
             
-            InfoCard(
-                title: "Indie Cost",
-                text: financial.indieCostRange
-            )
-            
-            InfoCard(
-                title: "Freelancer Cost",
-                text: financial.freelancerCostRange
-            )
-            
-            InfoCard(
-                title: "Agency Cost",
-                text: financial.agencyCostRange
-            )
-            
-            Spacer()
+            VStack(spacing: 16) {
+                
+                InfoCard(
+                    title: "Estimated Hours",
+                    text: "\(financial.estimatedHours) hrs",
+                    image: "hourglass.end"
+                )
+                
+                InfoCard(
+                    title: "Indie Cost",
+                    text: financial.indieCostRange,
+                    image: "person.fill"
+                )
+                
+                InfoCard(
+                    title: "Freelancer Cost",
+                    text: financial.freelancerCostRange,
+                    image: "person.circle.fill"
+                )
+                
+                InfoCard(
+                    title: "Agency Cost",
+                    text: financial.agencyCostRange,
+                    image: "person.3.fill"
+                )
+                
+                Spacer()
+            }
+            .padding(.vertical)
         }
-        .padding(.vertical)
     }
 }
 
+#Preview{
+    FinancialTab(financial: FinancialSpec.mock)
+}
