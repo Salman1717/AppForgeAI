@@ -41,7 +41,7 @@ struct BlueprintView: View {
                 ProductTab(product: viewModel.blueprint.product)
                     .tag(0)
 
-                TechnicalTab(technical: viewModel.blueprint.technical)
+                TechnicalTab(technical: viewModel.blueprint.technical, viewModel: viewModel)
                     .tag(1)
 
                 FinancialTab(financial: viewModel.blueprint.financial)
@@ -67,4 +67,8 @@ struct BlueprintView: View {
         .padding()
         .navigationTitle("Blueprint")
     }
+}
+
+#Preview {
+    BlueprintView(blueprint: Blueprint.mock)
 }

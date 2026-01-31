@@ -16,7 +16,7 @@ struct HomeView: View {
         NavigationStack{
             ZStack{
                 
-                Color(.black).ignoresSafeArea()
+                Color(.darkBlue).ignoresSafeArea()
                 
                 
                 VStack(alignment: .leading, spacing:20){

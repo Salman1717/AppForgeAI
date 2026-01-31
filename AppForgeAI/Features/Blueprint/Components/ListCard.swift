@@ -10,6 +10,7 @@ import SwiftUI
 struct ListCard: View {
     let title: String
     let items: [String]
+    var image: String?
     
     
     var body: some View {
@@ -18,28 +19,53 @@ struct ListCard: View {
         VStack(alignment: .leading, spacing: 8) {
             
             
-            Text(title)
-                .font(.headline)
-            
-            
-            ForEach(items, id: \.self) { item in
+            HStack{
+                
+                Image(systemName: image ?? "append.page.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 25, height: 25)
+                    .foregroundStyle(.electricBlue)
                 
                 
-                HStack(alignment: .top) {
+                Text(title)
+                    .font(.title2)
+                    .bold()
+                    .foregroundStyle(.white)
+            }
+            
+            VStack(alignment: .leading, spacing:8){
+                ForEach(items, id: \.self) { item in
                     
                     
-                    Text("•")
+                    HStack(alignment: .top, spacing: 8) {
+                        
+                        
+                        Circle()
+                            .frame(width: 10, height: 10)
+                            .foregroundStyle(.electricBlue)
+                        
+                        
+                        Text(item)
+                            .font(.body)
+                            .foregroundStyle(.offwhite)
+                    }
+                }
+            }
+            .padding()
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background{
+                ZStack{
+                    RoundedRectangle(cornerRadius: 12)
+                        .foregroundStyle(.offwhite.opacity(0.05))
                     
-                    
-                    Text(item)
-                        .font(.body)
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(lineWidth: 1)
+                        .foregroundStyle(.offwhite.opacity(0.15))
                 }
             }
         }
         .padding()
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(.ultraThinMaterial)
-        .cornerRadius(14)
     }
 }
 
