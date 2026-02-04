@@ -31,30 +31,21 @@ struct HomeView: View {
                     
                     textBox()
                     
-                    Spacer()
+                    
                     
                     NavigationLink(destination: HistoryView(repo: AppContainer().blueprintRepo) ) {
-                        
-                        Button(
-                            action:{},
-                            label:{
-                                HStack(spacing: 30){
-                                    Image(systemName: "document.viewfinder.fill")
-                                        .resizable()
-                                        .frame(width: 30, height: 30)
-                                    
-                                    Text("Veiw Blueprints")
-                                        .bold()
-                                }
-                            }
-                        )
-                        .buttonStyle(BlueButton())
+                        Text("Veiw Previous Blueprints")
+                            .bold()
+                            .font(.body)
+                            .foregroundStyle(.electricBlue)
+                            .underline()
+                            .italic()
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                         
                     }
                     
+                    Spacer()
                     
-                    if viewModel.isLoading{
-                        ProgressView("Forging")
-                    }
                     
                     if let error = viewModel.error{
                         Text(error)
@@ -81,8 +72,17 @@ struct HomeView: View {
                     
                     
                 }
+                .scrollDismissesKeyboard(.interactively)
                 .padding()
-                .navigationDestination(isPresented: .constant(viewModel.generatedBlueprint != nil)){
+                .fullScreenCover(isPresented: $viewModel.isLoading){
+                    BlueprintGenLoader()
+                }
+                .navigationDestination(
+                    isPresented: Binding(
+                        get: { viewModel.generatedBlueprint != nil },
+                        set: { _ in }
+                    )
+                ){
                     if let blueprint = viewModel.generatedBlueprint{
                         BlueprintView(blueprint: blueprint)
                     }
@@ -123,36 +123,40 @@ struct HomeView: View {
         }
     }
     
-    private func textBox() -> some View{
-        ZStack(alignment: .topLeading){
+    private func textBox() -> some View {
+        ZStack(alignment: .topLeading) {
+            // Background and border
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .foregroundStyle(
+                    LinearGradient(
+                        colors: [.electricBlue.opacity(0.2), .electricBlue.opacity(0.1)],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
             
-            if viewModel.ideaText.isEmpty{
-                
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .stroke(.offwhite.opacity(0.5), lineWidth: 0.5)
+            
+            // Placeholder text
+            if viewModel.ideaText.isEmpty {
                 Text("What are you trying to build Today? Describe your concept...")
                     .foregroundStyle(.offwhite.opacity(0.8))
                     .padding()
                     .font(.body)
-                
-            }
-                TextEditor(text: $viewModel.ideaText)
-                    .scrollContentBackground(.hidden)
-                    .frame(height: 150)
-                    .foregroundStyle(.offwhite)
-                    .font(.body)
-                    .padding()
-                    .overlay{
-                        RoundedRectangle(cornerRadius: 20, style: .continuous)
-                            .foregroundStyle(
-                                LinearGradient(colors: [.electricBlue.opacity(0.2), .electricBlue.opacity(0.1)], startPoint: .top, endPoint: .bottom)
-                            )
-                        
-                        RoundedRectangle(cornerRadius: 20, style: .continuous)
-                            .stroke(.offwhite.opacity(0.5),lineWidth: 0.5)
-                        
-                    
+                    .allowsHitTesting(false)
             }
             
+            // TextEditor
+            TextEditor(text: $viewModel.ideaText)
+                .scrollContentBackground(.hidden)
+                .frame(height: 150)
+                .foregroundStyle(.offwhite)
+                .font(.body)
+                .padding()
+                .background(Color.clear)
         }
+        .frame(minHeight: 150, maxHeight: 180)
     }
 }
 
