@@ -10,6 +10,7 @@ import SwiftUI
 struct HistoryView: View {
 
     @StateObject private var viewModel: HistoryViewModel
+    @Environment(\.dismiss) var dismiss
 
     init(repo: BlueprintRepositoryProtocol) {
         _viewModel = StateObject(
@@ -20,69 +21,88 @@ struct HistoryView: View {
     var body: some View {
 
         NavigationStack {
-
-            Group {
-
-                if viewModel.isLoading {
-                    ProgressView("Loading...")
-                }
-
-                else if let error = viewModel.errorMessage {
-                    Text(error)
-                        .foregroundColor(.red)
-                        .multilineTextAlignment(.center)
-                        .padding()
-                }
-
-                else if viewModel.blueprints.isEmpty {
-                    Text("No blueprints yet.")
-                        .foregroundColor(.secondary)
-                }
-
-                else {
-
-                    List {
-
-                        ForEach(viewModel.blueprints) { blueprint in
-
-                            NavigationLink {
-
-                                BlueprintView(
-                                    blueprint: blueprint,
-                                )
-
-                            } label: {
-
-                                HistoryRow(blueprint: blueprint)
+            ZStack{
+                
+                Color(.darkBlue).ignoresSafeArea()
+                VStack{
+                    
+                    HStack(spacing: 14){
+                        Image(systemName: "arrowshape.left.circle.fill")
+                            .font(.system(size: 35, weight: .bold))
+                            .foregroundStyle(.electricBlue)
+                            .onTapGesture{
+                                dismiss()
                             }
+                        
+                        Text("History")
+                            .font(.title2.bold())
+                            .multilineTextAlignment(.center)
+                            .foregroundStyle(.white)
+                        
+                        Spacer()
+                    }
+                    
+                    Group {
+                        
+                        if viewModel.isLoading {
+                            RotatingRectanglesLoader()
+                                .frame(width: 150, height: 150)
                         }
-                        .onDelete { indexSet in
-                            Task {
-                                await viewModel.delete(at: indexSet)
+                        
+                        else if let error = viewModel.errorMessage {
+                            Text(error)
+                                .foregroundColor(.red)
+                                .multilineTextAlignment(.center)
+                                .padding()
+                        }
+                        
+                        else if viewModel.blueprints.isEmpty {
+                            Text("No blueprints yet.")
+                                .foregroundColor(.secondary)
+                        }
+                        
+                        else {
+                            
+                            VStack {
+                                ScrollView{
+                                    ForEach(viewModel.blueprints) { blueprint in
+                                        
+                                        NavigationLink {
+                                            
+                                            BlueprintView(
+                                                blueprint: blueprint,
+                                            )
+                                            
+                                        } label: {
+                                            
+                                            HistoryRow(blueprint: blueprint)
+                                        }
+                                    }
+                                    .onDelete { indexSet in
+                                        Task {
+                                            await viewModel.delete(at: indexSet)
+                                        }
+                                    }
+                                }
+                                .padding(.horizontal)
+                                .scrollContentBackground(.hidden)
                             }
+                            
                         }
                     }
+                    Spacer()
                 }
-            }
-            .navigationTitle("History")
-            .toolbar {
-
-                ToolbarItem(placement: .navigationBarTrailing) {
-
-                    Button {
-                        Task { await viewModel.load() }
-                    } label: {
-                        Image(systemName: "arrow.clockwise")
-                    }
+                .task {
+                    await viewModel.load()
                 }
-            }
-            .task {
-                await viewModel.load()
             }
         }
+        .navigationBarBackButtonHidden()
     }
 }
 
-//#Preview {
-//    HistoryView()
-//}
+#Preview {
+    HistoryView(repo: FirestoreBlueprintRepository())
+}
+
+

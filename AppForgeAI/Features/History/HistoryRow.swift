@@ -19,19 +19,34 @@ struct HistoryRow: View {
 
             Text(blueprint.title)
                 .font(.headline)
+                .foregroundStyle(.electricBlue)
 
             Text(blueprint.description)
                 .font(.subheadline)
-                .foregroundColor(.secondary)
+                .foregroundColor(.offwhite)
+                .multilineTextAlignment(.leading)
 
             Text(blueprint.createdAt, style: .date)
                 .font(.caption)
-                .foregroundColor(.gray)
+                .foregroundColor(.orange)
+                .frame(maxWidth: .infinity, alignment: .trailing)
         }
-        .padding(.vertical, 4)
+        .padding()
+        .background{
+            ZStack{
+                RoundedRectangle(cornerRadius: 20)
+                    .foregroundStyle(.offwhite.opacity(0.05))
+                
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(lineWidth: 1)
+                    .foregroundStyle(.offwhite.opacity(0.15))
+            }
+        }
+        .padding(4)
     }
 }
 
-//#Preview {
-//    HistoryRow()
-//}
+#Preview {
+    HistoryRow(blueprint: Blueprint.mock)
+        .background(.darkBlue)
+}
