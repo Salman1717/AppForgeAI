@@ -47,11 +47,6 @@ struct HomeView: View {
                     Spacer()
                     
                     
-                    if let error = viewModel.error{
-                        Text(error)
-                            .foregroundStyle(.red)
-                    }
-                    
                     Button(action:{
                         Task{
                             await viewModel.generateBlueprint()

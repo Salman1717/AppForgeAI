@@ -13,7 +13,6 @@ final class HistoryViewModel: ObservableObject{
     
     @Published private(set) var blueprints: [Blueprint] = []
     @Published var isLoading = false
-    @Published var errorMessage: String?
     
     private let repo : BlueprintRepositoryProtocol
     
@@ -23,14 +22,13 @@ final class HistoryViewModel: ObservableObject{
     
     func load() async{
         isLoading = true
-        errorMessage = nil
         
         do {
             blueprints = try await repo.fetchAll()
         } catch let err as FirestoreError {
-            errorMessage = err.localizedDescription
+            SnackbarManager.shared.show(err.localizedDescription)
         } catch {
-            errorMessage = FirestoreError.unknown.localizedDescription
+            SnackbarManager.shared.show(FirestoreError.unknown.localizedDescription)
         }
         
         isLoading = false
@@ -44,9 +42,9 @@ final class HistoryViewModel: ObservableObject{
                 try await repo.delete(id: item.id)
                 blueprints.remove(at: index)
             }catch let err as FirestoreError {
-                errorMessage = err.localizedDescription
+                SnackbarManager.shared.show(err.localizedDescription)
             } catch {
-                errorMessage = FirestoreError.unknown.localizedDescription
+                SnackbarManager.shared.show(FirestoreError.unknown.localizedDescription)
             }
             
         }

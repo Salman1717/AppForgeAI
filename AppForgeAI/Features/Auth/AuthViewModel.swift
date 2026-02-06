@@ -12,7 +12,6 @@ import Combine
 final class AuthViewModel: ObservableObject{
     
     @Published var isAuthenticated: Bool = false
-    @Published var errorMessage: String?
     
     private let authService: AuthServiceProtocol
     
@@ -34,9 +33,9 @@ final class AuthViewModel: ObservableObject{
             isAuthenticated = true
         }catch{
             if let authError = error as? AuthError {
-                errorMessage = authError.localizedDescription
+                SnackbarManager.shared.show(authError.localizedDescription)
             } else {
-                errorMessage = AuthError.unknown.localizedDescription
+                SnackbarManager.shared.show(error.localizedDescription)
             }
         }
     }
@@ -48,9 +47,9 @@ final class AuthViewModel: ObservableObject{
             isAuthenticated = true
         }catch{
             if let authError = error as? AuthError {
-                errorMessage = authError.localizedDescription
+                SnackbarManager.shared.show(authError.localizedDescription)
             } else {
-                errorMessage = AuthError.unknown.localizedDescription
+                SnackbarManager.shared.show(error.localizedDescription)
             }
         }
     }
@@ -62,9 +61,9 @@ final class AuthViewModel: ObservableObject{
             isAuthenticated = true
         }catch{
             if let authError = error as? AuthError {
-                errorMessage = authError.localizedDescription
+                SnackbarManager.shared.show(authError.localizedDescription)
             } else {
-                errorMessage = AuthError.unknown.localizedDescription
+                SnackbarManager.shared.show(error.localizedDescription)
             }
         }
     }
@@ -76,9 +75,9 @@ final class AuthViewModel: ObservableObject{
             isAuthenticated = false
         } catch {
             if let authError = error as? AuthError {
-                errorMessage = authError.localizedDescription
+                SnackbarManager.shared.show(authError.localizedDescription)
             } else {
-                errorMessage = AuthError.unknown.localizedDescription
+                SnackbarManager.shared.show(error.localizedDescription)
             }
         }
     }

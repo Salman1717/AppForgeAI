@@ -13,7 +13,6 @@ final class IdeaInputViewModel:ObservableObject{
     
     @Published var ideaText = ""
     @Published var isLoading = false
-    @Published var error:String?
     @Published var generatedBlueprint: Blueprint?
     
     private let aiService: AIServiceProtocol
@@ -30,7 +29,6 @@ final class IdeaInputViewModel:ObservableObject{
     func generateBlueprint() async{
         
         isLoading = true
-        error = nil
         
         let maxRetries = 2
         var attempt = 0
@@ -55,10 +53,10 @@ final class IdeaInputViewModel:ObservableObject{
                 attempt += 1
                 isLoading = false
                 
-                self.error = error.localizedDescription
+                SnackbarManager.shared.show(error.localizedDescription)
                 
                 if attempt > maxRetries{
-                    self.error = GeminiError.maxRetriesReached.localizedDescription
+                    SnackbarManager.shared.show(GeminiError.maxRetriesReached.localizedDescription)
                     isLoading = false
                     return
                 }

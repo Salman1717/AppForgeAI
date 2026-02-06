@@ -49,12 +49,7 @@ struct HistoryView: View {
                                 .frame(width: 150, height: 150)
                         }
                         
-                        else if let error = viewModel.errorMessage {
-                            Text(error)
-                                .foregroundColor(.red)
-                                .multilineTextAlignment(.center)
-                                .padding()
-                        }
+                        
                         
                         else if viewModel.blueprints.isEmpty {
                             Text("No blueprints yet.")

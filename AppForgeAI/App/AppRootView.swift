@@ -39,5 +39,12 @@ struct AppRootView: View {
                 LoginView(viewModel: authVM)
             }
         }
+        .overlay(alignment: .center){
+            SnackbarView(manager: .shared)
+        }
     }
+}
+
+#Preview {
+    AppRootView()
 }

@@ -61,12 +61,6 @@ struct LoginView: View {
                         }
                     }
                 
-                
-                if let error = viewModel.errorMessage {
-                    Text(error)
-                        .foregroundColor(.red)
-                        .font(.footnote)
-                }
             }
             .padding()
             .onAppear{
